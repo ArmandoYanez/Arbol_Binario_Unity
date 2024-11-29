@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -12,6 +13,7 @@ public class ControladorUI : MonoBehaviour
     public Nodo nodoActual;
     private int nivelActual;
     
+    public List<GameObject> desableOnEnter;
     private Nodo opcionSeleccionada; // Nodo seleccionado para entrar (Buena, Neutra o Mala)
 
 
@@ -74,6 +76,16 @@ public class ControladorUI : MonoBehaviour
         {
             Debug.LogWarning("Por favor selecciona una opción antes de entrar.");
             return;
+        }
+        else
+        {
+            foreach (GameObject obj in desableOnEnter)
+            {
+                if (obj != null)
+                {
+                    obj.SetActive(false); // Desactiva el objeto
+                }
+            }
         }
 
         // Crear el nodo hijo si no existe y avanzar hacia el
