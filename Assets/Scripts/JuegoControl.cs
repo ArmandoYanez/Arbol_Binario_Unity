@@ -15,6 +15,7 @@ public class JuegoControl : MonoBehaviour
     public Nodo nodoActual;
     public ControladorUI _controladorUI;
 
+    
     // Llamado cuando se presiona "Terminar" (pasar al modo juego)
     public void TerminarEdicion()
     {
