@@ -63,27 +63,29 @@ public class Test : MonoBehaviour
     {
         if (!isChange)
         {
-            nodoActual.descripcion = $"Es {inputField.text}?"; // Guardamos en nodo root la priemra pregunta.
-           
-            
+            nodoActual.descripcion = $"Es {inputField.text}?"; // Guardamos en nodo root la primera pregunta.
+
             botonNextTwo.SetActive(false);
             inputField.text = "";
             inputFieldObj.SetActive(false);
-        
+
             botonSiObj.SetActive(true);
             botonNoObj.SetActive(true);
-            nodoActual = arbol.nodoRaiz;
-            
+        
+            // Aquí insertamos el nuevo nodo en el árbol balanceado SOLO DURANTE LA EJECUCIÓN
+            arbol.nodoRaiz = arbol.Insertar(arbol.nodoRaiz, nodoActual.descripcion); 
+        
+            nodoActual = arbol.nodoRaiz;  // Restablecer al nodo raíz después de la inserción balanceada
             gameState();
         }
         else
         {
             string temporal = nodoActual.descripcion;
             nodoActual.nodoNo = new Node(temporal);
-            
-            nodoActual.descripcion = $"{inputField.text}?"; // Guardamos en nodo root la priemra pregunta.
+
+            nodoActual.descripcion = $"{inputField.text}?"; // Guardamos en nodo root la primera pregunta.
             descripcionTexto.text = "NOMBRE DE LO QUE ESTAS PENSANDO?";
-        
+
             botonNextOne.SetActive(false);
             botonNextTwo.SetActive(true);
             inputField.text = "";
@@ -95,14 +97,19 @@ public class Test : MonoBehaviour
         if (!isChange)
         {
             nodoActual.nodoSi = new Node($"Piensas en {inputField.text}?");
+
             Debug.Log(arbol.nodoRaiz.nodoSi.descripcion);
-       
+
             botonNextTwo.SetActive(false);
             inputField.text = "";
             inputFieldObj.SetActive(false);
-        
+
             botonSiObj.SetActive(true);
             botonNoObj.SetActive(true);
+
+            // Insertamos el nuevo nodo de manera balanceada SOLO DURANTE LA EJECUCIÓN
+            arbol.nodoRaiz = arbol.Insertar(arbol.nodoRaiz, nodoActual.nodoSi.descripcion);
+
             nodoActual = arbol.nodoRaiz;
             gameState();
             SaveTree();
@@ -110,13 +117,17 @@ public class Test : MonoBehaviour
         else
         {
             nodoActual.nodoSi = new Node($"Piensas en {inputField.text}?");
-            
+
             botonNextTwo.SetActive(false);
             inputField.text = "";
             inputFieldObj.SetActive(false);
-        
+
             botonSiObj.SetActive(true);
             botonNoObj.SetActive(true);
+
+            // Insertamos el nuevo nodo de manera balanceada SOLO DURANTE LA EJECUCIÓN
+            arbol.nodoRaiz = arbol.Insertar(arbol.nodoRaiz, nodoActual.nodoSi.descripcion);
+
             nodoActual = arbol.nodoRaiz;
             isChange = false;
             gameState();
