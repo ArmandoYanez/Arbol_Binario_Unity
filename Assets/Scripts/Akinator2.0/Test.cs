@@ -51,7 +51,6 @@ public class Test : MonoBehaviour
             arbol = new Tree(nodoRaiz);
       
             nodoActual = nodoRaiz;
-            SaveTree();
             
             botonNextOne.SetActive(true);
             inputFieldObj.SetActive(true);
@@ -188,48 +187,6 @@ public class Test : MonoBehaviour
             SaveTreeManual();
         }
     }
-    
-    public void SaveTree()
-    {
-        if (arbol == null)
-        {
-            Debug.LogWarning("El árbol está vacío. Nada que guardar.");
-            return;
-        }
-
-        string json = JsonUtility.ToJson(arbol, true); // Serializa el árbol
-        string path = Application.persistentDataPath + "/tree.json";
-        System.IO.File.WriteAllText(path, json); // Guarda el JSON en un archivo
-        Debug.Log("Árbol guardado correctamente en: " + path);
-    }
-    
-    public void LoadTree()
-    {
-        string path = Application.persistentDataPath + "/tree.json";
-
-        if (System.IO.File.Exists(path))
-        {
-            string json = System.IO.File.ReadAllText(path); // Lee el archivo JSON
-            if (!string.IsNullOrWhiteSpace(json)) // Asegúrate de que el archivo no esté vacío
-            {
-                arbol = JsonUtility.FromJson<Tree>(json); // Deserializa el JSON en el objeto Tree
-                nodoActual = arbol.nodoRaiz; // Establece el nodo actual como la raíz
-                Debug.Log("Árbol cargado correctamente.");
-            }
-            else
-            {
-                Debug.LogWarning("El archivo JSON está vacío. No se puede cargar el árbol.");
-                arbol = null;
-                nodoActual = null;
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Archivo de árbol no encontrado. Se inicializará uno nuevo.");
-            arbol = null;
-            nodoActual = null;
-        }
-    }
 
     public void buttonSalir()
     {
@@ -241,23 +198,6 @@ public class Test : MonoBehaviour
         StartCoroutine(animacion());
     }
     
-    public void ClearTree()
-    {   
-        string path = Application.persistentDataPath + "/tree.json"; 
-        if (System.IO.File.Exists(path))
-        {
-            System.IO.File.WriteAllText(path, ""); 
-            Debug.Log("Archivo JSON limpiado.");
-        }
-        else
-        {
-            Debug.LogWarning("No se encontró el archivo JSON para limpiar.");
-        }
-        
-        arbol = null;
-        nodoActual = null;
-    }
-
     IEnumerator animacion()
     {
         animacionEntrada.Play("opening");
@@ -335,6 +275,22 @@ public class Test : MonoBehaviour
         else
         {
             Debug.LogWarning("Archivo del árbol no encontrado.");
+        }
+    }
+    
+    // Método para borrar el archivo que guarda el árbol
+    public void DeleteTreeManual()
+    {
+        string path = Application.persistentDataPath + "/tree_manual.txt"; 
+
+        if (System.IO.File.Exists(path))
+        {
+            System.IO.File.Delete(path); // Elimina el archivo
+            Debug.Log("Archivo del árbol eliminado exitosamente: " + path);
+        }
+        else
+        {
+            Debug.LogWarning("No se encontró ningún archivo para eliminar en: " + path);
         }
     }
 }
