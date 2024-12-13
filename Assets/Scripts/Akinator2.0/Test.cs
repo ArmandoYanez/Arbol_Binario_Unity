@@ -1,7 +1,6 @@
 using System.Collections;
 using TMPro;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,11 +8,10 @@ public class Test : MonoBehaviour
 {
     public Animator animacionEntrada;
     
-    public TextMeshProUGUI descripcionTexto;  // Referencia al TextMeshPro para mostrar la descripción del nodo
-    public TMP_InputField  inputField;             // Referencia al InputField para capturar el texto
-    public Button botonSi;                   // Botón para ir al nodoSi
-    public Button botonNo;                   // Botón para ir al nodoNo
-
+    public TextMeshProUGUI descripcionTexto;  
+    public TMP_InputField  inputField;             
+    public Button botonSi;                  
+    public Button botonNo;                 
     public GameObject txt;
     public GameObject title;
     
@@ -27,7 +25,7 @@ public class Test : MonoBehaviour
     public GameObject lampara;
     public GameObject monito;
     
-    private Node nodoActual;  // Nodo actual en el árbol
+    private Node nodoActual; 
     private Tree arbol;
 
     public bool isChange = false;
@@ -36,7 +34,6 @@ public class Test : MonoBehaviour
     public List<string> treeData = new List<string>(); // Lista para almacenar el árbol
     private int index = 0; // Índice para llevar el control durante la deserialización
     
-    // Start is called before the first frame update
     public void startGame()
     {
         LoadTreeManual();
@@ -109,6 +106,8 @@ public class Test : MonoBehaviour
             botonSiObj.SetActive(true);
             botonNoObj.SetActive(true);
             nodoActual = arbol.nodoRaiz;
+            
+            arbol.Balancear();
             gameState();
             SaveTreeManual();
         }
@@ -124,6 +123,8 @@ public class Test : MonoBehaviour
             botonNoObj.SetActive(true);
             nodoActual = arbol.nodoRaiz;
             isChange = false;
+            
+            arbol.Balancear();
             gameState();
             SaveTreeManual();
         }
@@ -156,6 +157,7 @@ public class Test : MonoBehaviour
             finishGame = false;
             gameState();
         }
+        arbol.Balancear();
     }
 
     // Método para mover al siguiente nodo en el árbol, cuando se selecciona 'No'
@@ -235,7 +237,7 @@ public class Test : MonoBehaviour
         treeData.Clear(); // Limpia la lista antes de serializar
         SerializeTree(arbol.nodoRaiz); // Inicia la serialización desde la raíz
 
-        string json = string.Join("\n", treeData); // Convierte la lista a un JSON-like string
+        string json = string.Join("\n", treeData); 
         Debug.Log("Árbol en formato JSON-like:\n" + json); // Imprime el árbol en formato JSON
 
         string path = Application.persistentDataPath + "/tree_manual.txt"; 
