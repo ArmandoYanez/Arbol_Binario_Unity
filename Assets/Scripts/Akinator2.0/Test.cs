@@ -267,7 +267,7 @@ public class Test : MonoBehaviour
         {
             treeData = new List<string>(System.IO.File.ReadAllLines(path)); // Carga los nodos del archivo
 
-            string json = string.Join("\n", treeData); // Convierte la lista a un JSON-like string
+            string json = string.Join("\n", treeData); 
             Debug.Log("Contenido del archivo JSON-like cargado:\n" + json); // Imprime el contenido del archivo
 
             index = 0; // Reinicia el índice
